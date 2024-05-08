@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://vao6kp8w7hlv"]
+
+[ext_resource type="Script" path="res://scenes/npc/npc.gd" id="1_5qkfn"]
+[ext_resource type="Texture2D" uid="uid://btxfsy6rguujs" path="res://assets/images/soldier1_gun.png" id="1_67jpu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i1ow1"]
+radius = 11.0
+height = 40.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4pcpa"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_5qkfn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_67jpu")
+offset = Vector2(10, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_i1ow1")
+
+[node name="NavAgent" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 20.0
+debug_enabled = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -26.0
+offset_top = -96.0
+offset_right = 24.0
+offset_bottom = -21.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Debug
+Debug
+Debug"
+label_settings = SubResource("LabelSettings_4pcpa")
