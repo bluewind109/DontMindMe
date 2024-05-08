@@ -7,13 +7,17 @@ const SPEED: float = 240.0
 @onready var sprite_2d = $Sprite2D
 @onready var nav_agent = $NavAgent
 @onready var label = $Label
+@onready var player_detect = $PlayerDetect
+@onready var ray_cast_2d = $PlayerDetect/RayCast2D
 
 var _waypoints: Array = []
 var _current_wp: int = 0
+var _player_ref: Player
 
 func _ready():
 	set_physics_process(false)
 	create_wp()
+	_player_ref = get_tree().get_first_node_in_group("player")
 	call_deferred("set_physics_process", true)
 
 
@@ -26,9 +30,21 @@ func _physics_process(delta):
 	if (Input.is_action_just_pressed("set_target")):
 		nav_agent.target_position = get_global_mouse_position()
 	
+	raycast_to_player()
 	update_navigation()
 	process_patrolling()
 	set_label()
+
+
+func raycast_to_player() -> void:
+	player_detect.look_at(_player_ref.global_position)
+
+
+func player_detected() -> bool:
+	var first_collider = ray_cast_2d.get_collider()
+	if (first_collider != null):
+		return first_collider.is_in_group("player")
+	return false
 
 
 func update_navigation() -> void:
@@ -52,10 +68,10 @@ func process_patrolling() -> void:
 
 
 func set_label() -> void:
-	var status_string = "DONE: %s\n" % nav_agent.is_navigation_finished()
-	status_string += "REACH: %s\n" % nav_agent.is_target_reachable()
-	status_string += "REACHED: %s\n" % nav_agent.is_target_reached()
-	status_string += "TARGET: %s\n" % nav_agent.target_position
+	var status_string = "Done: %s\n" % nav_agent.is_navigation_finished()
+	status_string += "Reached: %s\n" % nav_agent.is_target_reached()
+	status_string += "Target: %s\n" % nav_agent.target_position
+	status_string += "PlayerDetected: %s\n" % player_detected()
 	label.text = status_string
 
 
