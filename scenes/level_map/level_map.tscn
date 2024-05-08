@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bipfw72natc1r"]
+[gd_scene load_steps=22 format=3 uid="uid://bipfw72natc1r"]
 
 [ext_resource type="Script" path="res://scenes/level_map/level_map.gd" id="1_tdpo2"]
 [ext_resource type="Texture2D" uid="uid://xj4fpsw2nqjc" path="res://assets/spritesheets/grass.png" id="1_xeqyt"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://byx5677vcaley" path="res://scenes/player/player.tscn" id="8_n51yv"]
 [ext_resource type="PackedScene" uid="uid://cabsj20koj4ty" path="res://scenes/pick_up/pick_up.tscn" id="10_hem07"]
 [ext_resource type="PackedScene" uid="uid://cu35hfx1548n8" path="res://scenes/exit/exit.tscn" id="12_xg5wo"]
+[ext_resource type="PackedScene" uid="uid://sskysvg62020" path="res://scenes/game_ui/game_ui.tscn" id="13_rg0fb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r2u4g"]
 texture = ExtResource("1_xeqyt")
@@ -428,15 +429,6 @@ position = Vector2(-21, 114)
 
 [node name="PickUps" type="Node" parent="."]
 
-[node name="PickUp" parent="PickUps" instance=ExtResource("10_hem07")]
-position = Vector2(395, 191)
-
-[node name="PickUp2" parent="PickUps" instance=ExtResource("10_hem07")]
-position = Vector2(497, 192)
-
-[node name="PickUp3" parent="PickUps" instance=ExtResource("10_hem07")]
-position = Vector2(1002, 565)
-
 [node name="PickUp4" parent="PickUps" instance=ExtResource("10_hem07")]
 position = Vector2(285, 552)
 
@@ -448,3 +440,7 @@ position = Vector2(-106, 762)
 
 [node name="Exit" parent="." instance=ExtResource("12_xg5wo")]
 position = Vector2(1756, 1026)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameUI" parent="CanvasLayer" instance=ExtResource("13_rg0fb")]
