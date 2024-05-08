@@ -24,7 +24,7 @@ const SPEED = {
 
 @onready var sprite_2d = $Sprite2D
 @onready var nav_agent = $NavAgent
-@onready var label = $Label
+@onready var debug_label = $DebugLabel
 @onready var player_detect = $PlayerDetect
 @onready var ray_cast_2d = $PlayerDetect/RayCast2D
 @onready var warning = $Warning
@@ -166,7 +166,7 @@ func set_label() -> void:
 	status_string += "PlayerDetected: %s\n" % player_detected()
 	status_string += "FOV: %.2f %s\n" % [get_fov_angle(), ENEMY_STATE.keys()[_state]]
 	status_string += "%s %s\n" % [player_in_fov(), SPEED[_state]]
-	if (label != null): label.text = status_string
+	if (debug_label != null): debug_label.text = status_string
 
 
 func shoot() -> void:
