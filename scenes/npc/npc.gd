@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const BULLET = preload("res://scenes/bullet/bullet.tscn")
+
 enum ENEMY_STATE {
 	PATROLLING,
 	CHASING,
@@ -26,8 +28,10 @@ const SPEED = {
 @onready var player_detect = $PlayerDetect
 @onready var ray_cast_2d = $PlayerDetect/RayCast2D
 @onready var warning = $Warning
-@onready var gasp_sound = $GaspSound
 @onready var animation_player = $AnimationPlayer
+
+@onready var gasp_sound = $Sounds/GaspSound
+@onready var shoot_sound = $Sounds/ShootSound
 
 var _waypoints: Array = []
 var _current_wp: int = 0
@@ -164,3 +168,15 @@ func set_label() -> void:
 	label.text = status_string
 
 
+func shoot() -> void:
+	var target = _player_ref.global_position
+	var new_bullet = BULLET.instantiate()
+	new_bullet.init(target, global_position)
+	get_tree().root.add_child(new_bullet)
+	SoundManager.play_laser(shoot_sound)
+
+
+func _on_shoot_timer_timeout():
+	if (_state != ENEMY_STATE.CHASING):
+		return
+	shoot()

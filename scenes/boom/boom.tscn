@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://2rxoq1tlj3x4"]
+
+[ext_resource type="Texture2D" uid="uid://77m6fyxikynb" path="res://assets/spritesheets/EXPLOSION_ANIMATION.png" id="1_xlitq"]
+[ext_resource type="Script" path="res://scenes/boom/boom.gd" id="2_3n7ib"]
+[ext_resource type="AudioStream" uid="uid://dgbsycee0j3jh" path="res://assets/sounds/sfx_exp_medium4.wav" id="2_wpubc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yjrj"]
+atlas = ExtResource("1_xlitq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tklwh"]
+atlas = ExtResource("1_xlitq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wesxo"]
+atlas = ExtResource("1_xlitq")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nipf"]
+atlas = ExtResource("1_xlitq")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cl4kn"]
+atlas = ExtResource("1_xlitq")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vqqa"]
+atlas = ExtResource("1_xlitq")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t4efu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yjrj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tklwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wesxo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nipf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cl4kn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vqqa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Boom" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_t4efu")
+autoplay = "default"
+frame = 2
+frame_progress = 0.941335
+script = ExtResource("2_3n7ib")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_wpubc")
+autoplay = true
+
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]
