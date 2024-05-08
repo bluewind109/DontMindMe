@@ -8,6 +8,7 @@ var _collected: int = 0
 func _ready():
 	_pickups_count = pick_ups.get_children().size()
 	SignalManager.on_pickup.connect(on_pickup)
+	SignalManager.on_exit.connect(on_exit)
 
 
 func _process(delta):
@@ -24,3 +25,7 @@ func on_pickup() -> void:
 	print("on_pickup")
 	_collected += 1
 	check_show_exit()
+
+
+func on_exit() -> void:
+	print("GAME OVER, WIN")
