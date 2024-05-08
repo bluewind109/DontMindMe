@@ -3,9 +3,8 @@
 [ext_resource type="Script" path="res://scenes/npc/npc.gd" id="1_5qkfn"]
 [ext_resource type="Texture2D" uid="uid://btxfsy6rguujs" path="res://assets/images/soldier1_gun.png" id="1_67jpu"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i1ow1"]
-radius = 11.0
-height = 40.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_h5w6r"]
+radius = 16.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_4pcpa"]
 font_color = Color(0, 0, 0, 1)
@@ -18,7 +17,7 @@ texture = ExtResource("1_67jpu")
 offset = Vector2(10, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_i1ow1")
+shape = SubResource("CircleShape2D_h5w6r")
 
 [node name="NavAgent" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0

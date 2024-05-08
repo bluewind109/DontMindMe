@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bipfw72natc1r"]
+[gd_scene load_steps=18 format=3 uid="uid://bipfw72natc1r"]
 
 [ext_resource type="Texture2D" uid="uid://xj4fpsw2nqjc" path="res://assets/spritesheets/grass.png" id="1_xeqyt"]
 [ext_resource type="Texture2D" uid="uid://bxhwqt7kxpu04" path="res://assets/spritesheets/concrete.png" id="2_vsf1n"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cw0hcweoh5eba" path="res://assets/spritesheets/playeholder_tiles_64.png" id="6_3g8xq"]
 [ext_resource type="PackedScene" uid="uid://vao6kp8w7hlv" path="res://scenes/npc/npc.tscn" id="7_ncrco"]
 [ext_resource type="PackedScene" uid="uid://djg7cg32ubofg" path="res://scenes/waypoint/waypoint.tscn" id="8_4sipk"]
+[ext_resource type="PackedScene" uid="uid://byx5677vcaley" path="res://scenes/player/player.tscn" id="8_n51yv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r2u4g"]
 texture = ExtResource("1_xeqyt")
@@ -369,11 +370,12 @@ layer_3/tile_data = PackedInt32Array(393224, 65538, 1, 458760, 65538, 1, 524296,
 layer_4/name = "deco"
 layer_4/tile_data = PackedInt32Array()
 
+[node name="Player" parent="." instance=ExtResource("8_n51yv")]
+position = Vector2(-347, -239)
+
 [node name="NPC" parent="." instance=ExtResource("7_ncrco")]
 position = Vector2(67, -130)
 patrol_points = NodePath("../Path1")
-
-[node name="PlayerCamera" type="Camera2D" parent="NPC"]
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_ovrfo")
