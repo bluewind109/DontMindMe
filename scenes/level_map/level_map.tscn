@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bipfw72natc1r"]
+[gd_scene load_steps=17 format=3 uid="uid://bipfw72natc1r"]
 
 [ext_resource type="Texture2D" uid="uid://xj4fpsw2nqjc" path="res://assets/spritesheets/grass.png" id="1_xeqyt"]
 [ext_resource type="Texture2D" uid="uid://bxhwqt7kxpu04" path="res://assets/spritesheets/concrete.png" id="2_vsf1n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dwswvmr4l8yqn" path="res://assets/spritesheets/objects.png" id="5_febay"]
 [ext_resource type="Texture2D" uid="uid://cw0hcweoh5eba" path="res://assets/spritesheets/playeholder_tiles_64.png" id="6_3g8xq"]
 [ext_resource type="PackedScene" uid="uid://vao6kp8w7hlv" path="res://scenes/npc/npc.tscn" id="7_ncrco"]
+[ext_resource type="PackedScene" uid="uid://djg7cg32ubofg" path="res://scenes/waypoint/waypoint.tscn" id="8_4sipk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r2u4g"]
 texture = ExtResource("1_xeqyt")
@@ -370,6 +371,7 @@ layer_4/tile_data = PackedInt32Array()
 
 [node name="NPC" parent="." instance=ExtResource("7_ncrco")]
 position = Vector2(67, -130)
+patrol_points = NodePath("../Path1")
 
 [node name="PlayerCamera" type="Camera2D" parent="NPC"]
 
@@ -394,3 +396,26 @@ polygon = PackedVector2Array(-31, 28, -95, 27, -93.3242, 347.075, -350, 347, -35
 position = Vector2(833, -321)
 color = Color(0.721569, 0, 0.721569, 0)
 polygon = PackedVector2Array(158, 182, -97, 182, -97, 246, 159, 245)
+
+[node name="Path1" type="Node2D" parent="."]
+
+[node name="Waypoint" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(-33, -269)
+
+[node name="Waypoint2" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(222, -270)
+
+[node name="Waypoint3" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(217, 112)
+
+[node name="Waypoint4" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(224, 334)
+
+[node name="Waypoint5" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(-402, 348)
+
+[node name="Waypoint6" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(-408, 120)
+
+[node name="Waypoint7" parent="Path1" instance=ExtResource("8_4sipk")]
+position = Vector2(-21, 114)
