@@ -15,6 +15,7 @@ enum ENEMY_STATE {
 @onready var label = $Label
 @onready var player_detect = $PlayerDetect
 @onready var ray_cast_2d = $PlayerDetect/RayCast2D
+@onready var warning = $Warning
 
 var _waypoints: Array = []
 var _current_wp: int = 0
@@ -99,27 +100,40 @@ func process_chasing() -> void:
 	set_nav_to_player()
 
 
+func process_searching() -> void:
+	if (nav_agent.is_navigation_finished()):
+		set_state(ENEMY_STATE.PATROLLING)
+
+
 func update_movement() -> void:
 	match _state:
 		ENEMY_STATE.PATROLLING:
 			process_patrolling()
 		ENEMY_STATE.CHASING:
 			process_chasing()
+		ENEMY_STATE.SEARCHING:
+			process_searching()
 
 
 func set_state(new_state: ENEMY_STATE) -> void:
 	if (new_state == _state):
 		return
+	
+	if (new_state == ENEMY_STATE.SEARCHING):
+		warning.show()
+	else:
+		warning.hide()
+	
 	_state = new_state
 
 
 func update_state() -> void:
 	var new_state = _state
 	var can_see = can_see_player()
-	if (can_see_player()):
+	if (can_see):
 		new_state = ENEMY_STATE.CHASING
-	else:
-		new_state = ENEMY_STATE.PATROLLING
+	elif (!can_see and new_state == ENEMY_STATE.CHASING):
+		new_state = ENEMY_STATE.SEARCHING
 	set_state(new_state)
 
 

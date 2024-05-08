@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://vao6kp8w7hlv"]
+[gd_scene load_steps=6 format=3 uid="uid://vao6kp8w7hlv"]
 
 [ext_resource type="Script" path="res://scenes/npc/npc.gd" id="1_5qkfn"]
 [ext_resource type="Texture2D" uid="uid://btxfsy6rguujs" path="res://assets/images/soldier1_gun.png" id="1_67jpu"]
+[ext_resource type="Texture2D" uid="uid://cjwbdiq13be23" path="res://assets/images/running_1.png" id="3_nwrrv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h5w6r"]
 radius = 16.0
@@ -41,3 +42,8 @@ label_settings = SubResource("LabelSettings_4pcpa")
 rotation = -1.5708
 target_position = Vector2(0, 400)
 collision_mask = 5
+
+[node name="Warning" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_nwrrv")
