@@ -1,11 +1,21 @@
 extends CharacterBody2D
 
-const SPEED: float = 240.0
-
 enum ENEMY_STATE {
 	PATROLLING,
 	CHASING,
 	SEARCHING
+}
+
+const FOV = {
+	ENEMY_STATE.PATROLLING: 60.0,
+	ENEMY_STATE.CHASING: 120.0,
+	ENEMY_STATE.SEARCHING: 100.0
+}
+
+const SPEED = {
+	ENEMY_STATE.PATROLLING: 120.0,
+	ENEMY_STATE.CHASING: 240.0,
+	ENEMY_STATE.SEARCHING: 180.0
 }
 
 @export var patrol_points: NodePath
@@ -16,6 +26,8 @@ enum ENEMY_STATE {
 @onready var player_detect = $PlayerDetect
 @onready var ray_cast_2d = $PlayerDetect/RayCast2D
 @onready var warning = $Warning
+@onready var gasp_sound = $GaspSound
+@onready var animation_player = $AnimationPlayer
 
 var _waypoints: Array = []
 var _current_wp: int = 0
@@ -54,7 +66,7 @@ func get_fov_angle() -> float:
 
 
 func player_in_fov() -> bool:
-	return get_fov_angle() < 60.0
+	return get_fov_angle() < FOV[_state]
 
 
 func raycast_to_player() -> void:
@@ -76,7 +88,7 @@ func update_navigation() -> void:
 	if (!nav_agent.is_navigation_finished()):
 		var next_path_position: Vector2 = nav_agent.get_next_path_position()
 		sprite_2d.look_at(next_path_position)
-		velocity = global_position.direction_to(next_path_position) * SPEED
+		velocity = global_position.direction_to(next_path_position) * SPEED[_state]
 		move_and_slide()
 
 
@@ -121,8 +133,13 @@ func set_state(new_state: ENEMY_STATE) -> void:
 	
 	if (new_state == ENEMY_STATE.SEARCHING):
 		warning.show()
-	else:
+	elif(new_state == ENEMY_STATE.CHASING):
 		warning.hide()
+		gasp_sound.play()
+		animation_player.play("alert")
+	elif (new_state == ENEMY_STATE.PATROLLING):
+		warning.hide()
+		animation_player.play("RESET")
 	
 	_state = new_state
 
@@ -143,6 +160,7 @@ func set_label() -> void:
 	status_string += "Target: %s\n" % nav_agent.target_position
 	status_string += "PlayerDetected: %s\n" % player_detected()
 	status_string += "FOV: %.2f %s\n" % [get_fov_angle(), ENEMY_STATE.keys()[_state]]
+	status_string += "%s %s\n" % [player_in_fov(), SPEED[_state]]
 	label.text = status_string
 
 
