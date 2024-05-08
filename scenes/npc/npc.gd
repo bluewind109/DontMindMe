@@ -2,6 +2,12 @@ extends CharacterBody2D
 
 const SPEED: float = 240.0
 
+enum ENEMY_STATE {
+	PATROLLING,
+	CHASING,
+	SEARCHING
+}
+
 @export var patrol_points: NodePath
 
 @onready var sprite_2d = $Sprite2D
@@ -13,6 +19,7 @@ const SPEED: float = 240.0
 var _waypoints: Array = []
 var _current_wp: int = 0
 var _player_ref: Player
+var _state: ENEMY_STATE = ENEMY_STATE.PATROLLING
 
 func _ready():
 	set_physics_process(false)
@@ -31,8 +38,9 @@ func _physics_process(delta):
 		nav_agent.target_position = get_global_mouse_position()
 	
 	raycast_to_player()
+	update_state()
+	update_movement()
 	update_navigation()
-	process_patrolling()
 	set_label()
 
 
@@ -59,6 +67,10 @@ func player_detected() -> bool:
 	return false
 
 
+func can_see_player() -> bool:
+	return player_in_fov() and player_detected()
+
+
 func update_navigation() -> void:
 	if (!nav_agent.is_navigation_finished()):
 		var next_path_position: Vector2 = nav_agent.get_next_path_position()
@@ -74,9 +86,41 @@ func navigate_wp() -> void:
 	_current_wp += 1
 
 
+func set_nav_to_player() -> void:
+	nav_agent.target_position = _player_ref.global_position
+
+
 func process_patrolling() -> void:
 	if (nav_agent.is_navigation_finished()):
 		navigate_wp()
+
+
+func process_chasing() -> void:
+	set_nav_to_player()
+
+
+func update_movement() -> void:
+	match _state:
+		ENEMY_STATE.PATROLLING:
+			process_patrolling()
+		ENEMY_STATE.CHASING:
+			process_chasing()
+
+
+func set_state(new_state: ENEMY_STATE) -> void:
+	if (new_state == _state):
+		return
+	_state = new_state
+
+
+func update_state() -> void:
+	var new_state = _state
+	var can_see = can_see_player()
+	if (can_see_player()):
+		new_state = ENEMY_STATE.CHASING
+	else:
+		new_state = ENEMY_STATE.PATROLLING
+	set_state(new_state)
 
 
 func set_label() -> void:
@@ -84,8 +128,7 @@ func set_label() -> void:
 	status_string += "Reached: %s\n" % nav_agent.is_target_reached()
 	status_string += "Target: %s\n" % nav_agent.target_position
 	status_string += "PlayerDetected: %s\n" % player_detected()
-	status_string += "IsInFOV: %s\n" % player_in_fov()
-	status_string += "FOV: %.2f\n" % get_fov_angle()
+	status_string += "FOV: %.2f %s\n" % [get_fov_angle(), ENEMY_STATE.keys()[_state]]
 	label.text = status_string
 
 

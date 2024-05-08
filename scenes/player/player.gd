@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-const SPEED: float = 200.0
+const SPEED: float = 300.0
 
 func _ready():
 	pass # Replace with function body.
