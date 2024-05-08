@@ -135,7 +135,7 @@ func set_state(new_state: ENEMY_STATE) -> void:
 		warning.show()
 	elif(new_state == ENEMY_STATE.CHASING):
 		warning.hide()
-		gasp_sound.play()
+		SoundManager.play_gasp(gasp_sound)
 		animation_player.play("alert")
 	elif (new_state == ENEMY_STATE.PATROLLING):
 		warning.hide()

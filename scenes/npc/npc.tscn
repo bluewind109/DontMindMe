@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://vao6kp8w7hlv"]
+[gd_scene load_steps=9 format=3 uid="uid://vao6kp8w7hlv"]
 
 [ext_resource type="Script" path="res://scenes/npc/npc.gd" id="1_5qkfn"]
 [ext_resource type="Texture2D" uid="uid://btxfsy6rguujs" path="res://assets/images/soldier1_gun.png" id="1_67jpu"]
 [ext_resource type="Texture2D" uid="uid://cjwbdiq13be23" path="res://assets/images/running_1.png" id="3_nwrrv"]
-[ext_resource type="AudioStream" uid="uid://cuh7gpqrdtpfu" path="res://assets/sounds/gasp1.wav" id="4_xlwkv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h5w6r"]
 radius = 16.0
@@ -93,4 +92,3 @@ libraries = {
 }
 
 [node name="GaspSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_xlwkv")
