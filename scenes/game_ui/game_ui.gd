@@ -20,6 +20,10 @@ func _process(delta):
 	time_label.text = "%.1fs" % _time
 
 
+func update_score(act: int, target: int) -> void:
+	score_label.text = "%s / %s" % [act, target]
+
+
 func on_show_exit() -> void:
 	exit_label.show()
 

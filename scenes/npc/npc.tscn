@@ -48,7 +48,7 @@ _data = {
 "alert": SubResource("Animation_h8kgx")
 }
 
-[node name="NPC" type="CharacterBody2D"]
+[node name="NPC" type="CharacterBody2D" groups=["npc"]]
 collision_layer = 0
 script = ExtResource("1_5qkfn")
 
@@ -62,9 +62,9 @@ shape = SubResource("CircleShape2D_h5w6r")
 [node name="NavAgent" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
 target_desired_distance = 20.0
-debug_enabled = true
 
-[node name="Label" type="Label" parent="."]
+[node name="DebugLabel" type="Label" parent="."]
+visible = false
 offset_left = -26.0
 offset_top = -96.0
 offset_right = 24.0

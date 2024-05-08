@@ -29,6 +29,7 @@ const SPEED = {
 @onready var ray_cast_2d = $PlayerDetect/RayCast2D
 @onready var warning = $Warning
 @onready var animation_player = $AnimationPlayer
+@onready var shoot_timer = $ShootTimer
 
 @onready var gasp_sound = $Sounds/GaspSound
 @onready var shoot_sound = $Sounds/ShootSound
@@ -165,7 +166,7 @@ func set_label() -> void:
 	status_string += "PlayerDetected: %s\n" % player_detected()
 	status_string += "FOV: %.2f %s\n" % [get_fov_angle(), ENEMY_STATE.keys()[_state]]
 	status_string += "%s %s\n" % [player_in_fov(), SPEED[_state]]
-	label.text = status_string
+	if (label != null): label.text = status_string
 
 
 func shoot() -> void:
@@ -174,6 +175,11 @@ func shoot() -> void:
 	new_bullet.init(target, global_position)
 	get_tree().root.add_child(new_bullet)
 	SoundManager.play_laser(shoot_sound)
+
+
+func stop_action() -> void:
+	set_physics_process(false)
+	shoot_timer.stop()
 
 
 func _on_shoot_timer_timeout():
