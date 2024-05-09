@@ -8,7 +8,7 @@ func play_sound() -> void:
 	sound.play()
 
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	set_deferred("monitoring", false)
 	SignalManager.on_pickup.emit()
 	animation_player.play("vanish")

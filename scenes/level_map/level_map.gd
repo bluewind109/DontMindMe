@@ -11,10 +11,26 @@ func _ready():
 	game_ui.update_score(_collected, _pickups_count)
 	SignalManager.on_pickup.connect(on_pickup)
 	SignalManager.on_exit.connect(on_exit)
+	SignalManager.on_game_over.connect(on_game_over)
 
 
-func _process(delta):
+func _process(_delta):
 	pass
+
+
+func on_game_over() -> void:
+	end_game()
+
+
+func end_game() -> void:
+	for bullet_node in get_tree().get_nodes_in_group("bullet"):
+		bullet_node.queue_free()
+		
+	var player_node = get_tree().get_first_node_in_group("player")
+	player_node.set_physics_process(false)
+	
+	for npc_node in get_tree().get_nodes_in_group("npc"):
+		npc_node.stop_action()
 
 
 func check_show_exit() -> void:
@@ -29,11 +45,5 @@ func on_pickup() -> void:
 
 
 func on_exit() -> void:
-	for bullet_node in get_tree().get_nodes_in_group("bullet"):
-		bullet_node.queue_free()
-		
-	var player_node = get_tree().get_first_node_in_group("player")
-	player_node.set_physics_process(false)
-	
-	for npc_node in get_tree().get_nodes_in_group("npc"):
-		npc_node.stop_action()
+	end_game()
+

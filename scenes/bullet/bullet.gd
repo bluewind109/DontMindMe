@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var timer = $Timer
+
 const BOOM = preload("res://scenes/boom/boom.tscn")
 const SPEED: float = 450.0
 
@@ -32,4 +34,8 @@ func _on_timer_timeout():
 
 
 func _on_body_entered(body):
-	create_boom()
+	if (body.is_in_group("player")):
+		timer.stop()
+		SignalManager.on_game_over.emit()
+	else:
+		create_boom()

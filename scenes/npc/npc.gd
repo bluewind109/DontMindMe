@@ -43,6 +43,12 @@ func _ready():
 	set_physics_process(false)
 	create_wp()
 	_player_ref = get_tree().get_first_node_in_group("player")
+	#call_deferred("set_physics_process", true)
+	call_deferred("late_setup")
+
+
+func late_setup() -> void:
+	await get_tree().physics_frame
 	call_deferred("set_physics_process", true)
 
 
@@ -51,7 +57,7 @@ func create_wp() -> void:
 		_waypoints.append(child_node.global_position)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if (Input.is_action_just_pressed("set_target")):
 		nav_agent.target_position = get_global_mouse_position()
 	
@@ -186,3 +192,7 @@ func _on_shoot_timer_timeout():
 	if (_state != ENEMY_STATE.CHASING):
 		return
 	shoot()
+
+
+func _on_hit_box_body_entered(_body):
+	SignalManager.on_game_over.emit()
