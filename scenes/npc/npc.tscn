@@ -65,6 +65,7 @@ shape = SubResource("CircleShape2D_h5w6r")
 [node name="NavAgent" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
 target_desired_distance = 20.0
+avoidance_enabled = true
 
 [node name="DebugLabel" type="Label" parent="."]
 visible = false
@@ -112,5 +113,6 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_6eavm")
 
+[connection signal="velocity_computed" from="NavAgent" to="." method="_on_nav_agent_velocity_computed"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

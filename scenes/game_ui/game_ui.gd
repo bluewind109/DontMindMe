@@ -35,12 +35,16 @@ func on_show_exit() -> void:
 
 
 func on_exit() -> void:
+	if (_game_over): return
+	
 	_game_over = true
 	game_over.show()
 	game_over_label.text = "Mission Success! \nYou took %.1f seconds" % _time
 
 
 func on_game_over() -> void:
+	if (_game_over): return
+	
 	_game_over = true
 	game_over.show()
 	game_over_label.text = "You died! Press space to go back"

@@ -99,8 +99,12 @@ func update_navigation() -> void:
 	if (!nav_agent.is_navigation_finished()):
 		var next_path_position: Vector2 = nav_agent.get_next_path_position()
 		sprite_2d.look_at(next_path_position)
-		velocity = global_position.direction_to(next_path_position) * SPEED[_state]
-		move_and_slide()
+		#velocity = global_position.direction_to(next_path_position) * SPEED[_state]
+		var ini_velocity = global_position.direction_to(next_path_position) * SPEED[_state]
+		#move_and_slide()
+		
+		# invoke _on_nav_agent_velocity_computed()
+		nav_agent.set_velocity(ini_velocity)
 
 
 func navigate_wp() -> void:
@@ -196,3 +200,8 @@ func _on_shoot_timer_timeout():
 
 func _on_hit_box_body_entered(_body):
 	SignalManager.on_game_over.emit()
+
+
+func _on_nav_agent_velocity_computed(safe_velocity):
+	velocity = safe_velocity
+	move_and_slide()
